@@ -1,0 +1,34 @@
+version: '2.1'
+
+services:
+  app:
+    build: ./app
+    container_name: app
+    volumes:
+      - ./app:/var/www/app
+    ports:
+      - 8000:8000
+    links:
+      - db2 
+
+
+  #data_studio:
+  #  container_name: data_studio
+  #  image: store/ibmcorp/data_studio:4.1.3 
+  #  ports:
+  #    - 5901:5901
+  #    - 6901:6901
+  #  links:
+  #    - db2  
+
+  db2:
+    image: ibmcom/db2express-c:latest
+    container_name: db2
+    ports:
+      - 50000:50000
+    environment:
+      - DB2INST1_PASSWORD=12qwaszx
+      - LICENSE=accept
+    volumes: 
+      - /var/db2_data_1
+    command: db2start
